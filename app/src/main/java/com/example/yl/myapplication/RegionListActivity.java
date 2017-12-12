@@ -22,6 +22,7 @@ public class RegionListActivity extends AppCompatActivity implements AdapterView
     private List<Book> dataList = null;
 
     @Override
+    
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
