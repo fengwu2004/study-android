@@ -1,19 +1,13 @@
 package com.example.yl.myapplication;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedOutputStream;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -22,67 +16,67 @@ import java.util.List;
 
 public class MyAdapter extends BaseAdapter {
 
-    private Context context;
+  private Context context;
 
-    private List<Book> books;
+  private List<Book> books;
 
-    private LayoutInflater layoutInflater;
+  private LayoutInflater layoutInflater;
 
-    private ImageView bookicon;
+  private ImageView bookicon;
 
-    private TextView title;
+  private TextView title;
 
-    private TextView introduce;
+  private TextView introduce;
 
-    MyAdapter(Context context, List<Book> books) {
+  MyAdapter(Context context, List<Book> books) {
 
-        this.context = context;
+    this.context = context;
 
-        this.books = books;
+    this.books = books;
 
-        layoutInflater = LayoutInflater.from(this.context);
+    layoutInflater = LayoutInflater.from(this.context);
+  }
+
+  @Override
+  public int getCount() {
+
+    return books.size();
+  }
+
+  @Override
+  public Object getItem(int position) {
+
+    return books.get(position);
+  }
+
+  @Override
+  public long getItemId(int position) {
+
+    return position;
+  }
+
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+
+    if (convertView == null) {
+
+      convertView = layoutInflater.inflate(R.layout.layout, null);
     }
 
-    @Override
-    public int getCount() {
+    this.bookicon = convertView.findViewById(R.id.imageView);
 
-        return books.size();
-    }
+    title = convertView.findViewById(R.id.title);
 
-    @Override
-    public Object getItem(int position) {
+    introduce = convertView.findViewById(R.id.introduce);
 
-        return books.get(position);
-    }
+    Book book = books.get(position);
 
-    @Override
-    public long getItemId(int position) {
+    this.bookicon.setBackgroundResource(book.picture);
 
-        return position;
-    }
+    title.setText(book.title);
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    introduce.setText(book.introduce);
 
-        if (convertView == null) {
-
-            convertView = layoutInflater.inflate(R.layout.layout, null);
-        }
-
-        bookicon = convertView.findViewById(R.id.imageView);
-
-        title = convertView.findViewById(R.id.title);
-
-        introduce = convertView.findViewById(R.id.introduce);
-
-        Book book = books.get(position);
-
-        bookicon.setBackgroundResource(book.picture);
-
-        title.setText(book.title);
-
-        introduce.setText(book.introduce);
-
-        return convertView;
-    }
+    return convertView;
+  }
 }

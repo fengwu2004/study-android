@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="title">你好</string>
+    <string name="action_edit">Acid</string>
+    <string name="action_share">分享</string>
+    <string name="action_settings">设置</string>
 </resources>

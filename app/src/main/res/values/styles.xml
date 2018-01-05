@@ -1,11 +1,27 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/dim_foreground_material_dark</item>
+        <item name="android:textColorSecondary">#ffffff</item>
+    </style>
+
+    <style name="PopupTheme" parent="AlertDialog.AppCompat.Light">
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:background">#000000</item>
+        <item name="actionOverflowMenuStyle">@style/OverFlowMenuStyle</item>
+    </style>
+
+    <style name="OverFlowMenuStyle" parent="Base.Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">true</item>
+    </style>
+
+    <style name="SchnauzerStyle">
+        <item name="dogName"></item>
     </style>
 
 </resources>

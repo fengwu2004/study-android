@@ -4,7 +4,7 @@ package com.example.yl.myapplication;
  * Created by yl on 17-12-12.
  */
 
-public class Book {
+public class Book extends Object {
 
     public String title;
 

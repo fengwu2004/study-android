@@ -17,34 +17,33 @@ import java.util.List;
 
 public class RegionListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
-    private ListView listview;
+  private ListView listview;
 
-    private List<Book> dataList = null;
+  private List<Book> dataList = null;
 
-    @Override
-    
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_regionlist);
+    setContentView(R.layout.activity_regionlist);
 
-        dataList = new ArrayList();
+    dataList = new ArrayList();
 
-        for (int i = 0; i < 20; ++i) {
+    for (int i = 0; i < 20; ++i) {
 
-            dataList.add(new Book("学好C++", R.drawable.icon, "深入浅出"));
-        }
-
-        listview = findViewById(R.id.listview);
-
-        listview.setAdapter(new MyAdapter(this, dataList));
-
-        listview.setOnItemClickListener(this);
+      dataList.add(new Book("学好C++", R.drawable.icon, "深入浅出"));
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    listview = findViewById(R.id.listview);
 
-        Toast.makeText(RegionListActivity.this, "点击" + position + "条数据", Toast.LENGTH_SHORT).show();
-    }
+    listview.setAdapter(new MyAdapter(this, dataList));
+
+    listview.setOnItemClickListener(this);
+  }
+
+  @Override
+  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    Toast.makeText(RegionListActivity.this, "点击" + position + "条数据", Toast.LENGTH_SHORT).show();
+  }
 }

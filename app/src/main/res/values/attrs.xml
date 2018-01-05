@@ -1,0 +1,17 @@
+<resources>
+
+    <declare-styleable name="ogView">
+        <attr name="roundWidth" format="dimension"/>
+        <attr name="roundHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="DogStyle">
+        <attr name="dogSex">
+            <enum name="girl" value="1"></enum>
+            <enum name="boy" value="2"></enum>
+        </attr>
+        <attr name="dogName" format="string"></attr>
+        <attr name="dogColor" format="color"></attr>
+    </declare-styleable>
+
+</resources>
