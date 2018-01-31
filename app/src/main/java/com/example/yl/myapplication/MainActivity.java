@@ -1,6 +1,7 @@
 package com.example.yl.myapplication;
 
-import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,12 +9,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+  @BindView(R.id.textView) TextView mTextView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +39,33 @@ public class MainActivity extends AppCompatActivity {
   @OnClick(R.id.button)
   public void onClick(View v) {
 
-    Intent intent = new Intent(MainActivity.this, RegionListActivity.class);
+    Runnable runnable = new Runnable() {
+      @Override
+      public void run() {
 
-    startActivity(intent);
+        try {
+
+          Thread.sleep(5000);
+
+          mTextView.post(new Runnable() {
+            @Override
+            public void run() {
+
+              mTextView.setText("AS");
+            }
+          });
+
+        }
+        catch (InterruptedException e) {
+
+          e.printStackTrace();
+        }
+      }
+    };
+
+    Thread thread = new Thread(runnable);
+
+    thread.start();
   }
 
   @Override
