@@ -1,9 +1,11 @@
 package com.example.yl.myapplication;
 
+import android.content.Intent;
 import android.icu.text.RelativeDateTimeFormatter;
 import android.icu.text.SimpleDateFormat;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.INotificationSideChannel;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,14 +18,19 @@ import android.view.View;
 import android.widget.TextView;
 
 
+import com.itgoyo.logtofilelibrary.LogToFileUtils;
+
 import java.security.Guard;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -33,6 +40,8 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
   @BindView(R.id.textView) TextView mTextView;
+
+  FutureTask<Number> futureTask;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,44 +57,55 @@ public class MainActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
 
     toolbar.setNavigationIcon(R.drawable.back);
+
+    LogToFileUtils.init(this); //初始化
+
+    LogToFileUtils.write("sample text");//写入日志
+  }
+
+  private void test() {
+
+    CountRunnable work = new CountRunnable();
+
+    futureTask = new FutureTask<Number>(work) {
+
+      @Override
+      protected void done() {
+        try {
+
+          Number number = futureTask.get();
+
+          Log.d("ABCD", Thread.currentThread().getName());
+        }
+        catch (InterruptedException e) {
+
+          e.printStackTrace();
+        }
+        catch (ExecutionException e) {
+
+          e.printStackTrace();
+        }
+        catch (CancellationException e) {
+
+        }
+      }
+    };
+
+    ExecutorService es = Executors.newFixedThreadPool(2);
+
+    es.execute(futureTask);
+
+    System.out.println("任务结束" + es.isShutdown());
   }
 
   @OnClick(R.id.button)
   public void onClick(View v) {
 
-    ExecutorService es = Executors.newSingleThreadExecutor();
+    Intent intent = new Intent();
 
-    CountRunnable work = new CountRunnable();
+    intent.setClass(MainActivity.this, MapActivity.class);
 
-    Future<Number> future = es.submit(work);
-
-    System.out.println("任务开始于");
-
-    try {
-
-      TimeUnit.SECONDS.sleep(1);
-
-      System.out.println("主线程" + Thread.currentThread().getName() + "依然可以执行");
-    }
-    catch (InterruptedException e) {
-
-      e.printStackTrace();
-    }
-
-    try {
-
-      Number object = future.get();
-
-      System.out.println("任务结束于" + " result="+object.num);
-    }
-    catch (Exception e) {
-
-      e.printStackTrace();
-    }
-
-    es.shutdown();
-
-    System.out.println("任务结束"+es.isShutdown());
+    startActivity(intent);
   }
 
   static class Number{
@@ -110,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
       Number number = new Number();
 
-      TimeUnit.SECONDS.sleep(2);
+      TimeUnit.SECONDS.sleep(10);
 
       number.setNum(10);
 
